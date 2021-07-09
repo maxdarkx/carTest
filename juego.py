@@ -2,23 +2,26 @@ from pista_model import pista_model
 from os import system
 from time import sleep
 
+# Desde esta clase se controla el juego en su totalidad
 class juego:
     def __init__(self):
         self.p1 = pista_model()
-        self.jugadores = ["jugador1", "jugador2", "jugador3", "jugador4", "jugador5"]
-        self.tipo=[True, False, False, False, False]
+        self.pista_podio = 1
 
+    # funcion para imprimir el menu principal, incluye correccion de errores anti usuario
     def menu(self):
         op = True
         while op:
             self.clear_screen()
+            print("\t DRAG RACE\n")
             print("1. Seleccione los nombres de los jugadores")
             print("2. Selecciones los tipos de jugadores")
             print("3. jugar")
             a = input("Ingrese su opcion: ")
+
+            #correccion de errores: el usuario debe ingresar un entero entre 1 y 3
             try:
                 b = int(a)
-
             except:
                 print("Ha introducido un valor no valido. Intentelo de nuevo")
                 sleep(2)
@@ -37,10 +40,12 @@ class juego:
         else:
             self.jugar()
 
+    # funcion para borrar la pantalla
     @staticmethod
     def clear_screen():
         system('clear')
 
+    # menu para cambiar los nombres de los jugadores, contiene correccion de errores
     def nombres_jugadores(self):
         op = True
         while op:
@@ -48,6 +53,8 @@ class juego:
             for i in self.p1.jugador:
                 print("Jugador", i.get_id(), ":", i.get_name(), sep=" ")
             a = input("Ingrese el id del jugador que desea cambiar: ")
+
+            #correccion de errores: el usuario debe ingresar un numero entre 0 y 4 (id jugador)
             try:
                 b = int(a)
             except:
@@ -70,6 +77,7 @@ class juego:
         sleep(2)
         self.menu()
 
+    #menu para cambiar el tipo (maquina, jugador) a los jugadores
     def tipo_jugadores(self):
         op = True
         while op:
@@ -81,6 +89,8 @@ class juego:
                 else:
                     print(" Maquina")
             a = input("Ingrese el id del jugador que desea cambiar: ")
+
+            #correccion de errores: el usuario debe ingresar un numero entre 0 y 4 (id jugador)
             try:
                 b = int(a)
             except:
@@ -103,14 +113,63 @@ class juego:
             else:
                 print(" Maquina")
 
-        print("Ha cambiado el tipo del jugador",b,"exitosamente")
+        print("Ha cambiado el tipo del jugador", b, "exitosamente")
         sleep(2)
         self.menu()
 
+    # rutina principal del juego: si el jugador no ha llegado a la meta, tira el dado
+    # y su vehiculo se mueve dado * 10 en su carril. Se verifica si el jugador llego
+    # a la meta y se finaliza el juego cuando todos llegan a la meta
+    # distancia carril = (150) == 1500 metros
+
     def jugar(self):
-        print("jugar")
+        clasificacion = []
+        self.clear_screen()
+        print("Pista Inicial")
+        self.p1.print_pista()
         sleep(2)
-        self.menu()
+
+        fin_juego = False
+        while not fin_juego:
+            self.clear_screen()
+            for i in self.p1.jugador:
+                if not i.termino:
+                    dd = i.dado()
+                    dat = int(dd)
+                    self.clear_screen()
+                    print("mover carril", i.get_id(), i.get_name(),"posicion: ", i.carril.cond.carro.get_pos(),"dados:", dat)
+                    sleep(2)
+                    self.clear_screen()
+                    self.p1.mover_carril(i.get_id(), dat*10)
+                    self.ganar()
+                    fin_juego = self.finaliza_juego()
+                    sleep(2)
+
+        for i in range(1,4):
+            for j in self.p1.jugador:
+                if j.podio == i:
+                    clasificacion.append("("+str(j.podio) + ") " + str(j.get_id())+". "+j.get_name())
+        print(clasificacion)
+
+    def ganar(self):
+        for i in self.p1.jugador:
+            if i.carril.cond.carro.get_pos() >= i.carril.size and not i.termino:
+                i.ganador_podio(self.pista_podio)
+                i.finaliza_juego()
+                self.pista_podio += 1
+                print(i.podio, " ganador:",i.get_id(), i.get_name())
+
+    def finaliza_juego(self):
+        k = 0
+        for i in self.p1.jugador:
+            if i.termino:
+                k += 1
+        print("acabaron", k)
+        if k >= 5:
+            return True
+        else:
+            return False
+
 
 
 
