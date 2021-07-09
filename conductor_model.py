@@ -1,15 +1,12 @@
 from car_model import car_model
 
-
+# la clase conductor solo cuenta con un id y un carro correspondiente, y sera agregada a un jugador
+# que podra ser la maquina o un usuario
 class conductor_model:
 
-    def __init__(self, id, nombre):
+    def __init__(self, id):
         self.id = id
-        self.nombre_conductor = nombre
         self.carro = car_model()
-
-    def get_name(self):
-        return self.nombre_conductor
 
     def get_id(self):
         return self.id

@@ -24,10 +24,17 @@ class car_model:
     # Inicializacion del carro: posicion del carro en el eje x
     def __init__(self):
         self.posicion = 0
+        self.size = 7
 
     # para cambiar la posicion del carro
-    def mover(self, pos):
+    def set_pos(self, pos):
         self.posicion = pos
+
+    def get_pos(self):
+        return self.posicion
+
+    def get_size(self):
+        return self.size
 
     #impresion de espacios y retornos de carro, solo para pruebas
     def espacio_print (self):
