@@ -7,9 +7,25 @@ from carril_model import carril_model
 class jugador:
     def __init__(self, id, nombre, tipo=False, size=150):
         self.id = id
+        self.name = nombre
         self.tipo = tipo
         self.size = size
         self.carril = carril_model(id)
 
+    def get_name(self):
+        return self.name
 
+    def get_tipo(self):
+        return self.tipo
+
+    def set_name(self, nom):
+        self.name = nom
+        return self.name
+
+    def set_tipo(self):
+        self.tipo = not self.tipo
+        return self.tipo
+
+    def get_id(self):
+        return self.id
 
