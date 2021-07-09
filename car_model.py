@@ -21,23 +21,45 @@ class car_model:
     carMed = rayaVer + "    " + angulo2 + triRell
     carInf = anguloInfDer + medCir + rayaHozGruesa + rayaHozGruesa + medCir + rayaHozGruesa + anguloInfIzq
 
-    def espacio_print (self, espacio):
-        for i in range(espacio):
+    # Inicializacion del carro: posicion del carro en el eje x
+    def __init__(self):
+        self.posicion = 0
+
+    # para cambiar la posicion del carro
+    def mover(self, pos):
+        self.posicion = pos
+
+    #impresion de espacios y retornos de carro, solo para pruebas
+    def espacio_print (self):
+        for i in range(self.posicion):
             print(" ", end="")
 
+    def siguiente_seccion(self):
+        print()
+
+
+    #impresiones de las partes superior, media e inferior del carro. las imprime la pista o el propio carro para pruebas
     def med_print(self):
-        print(self.carMed, end=None)
+        print(self.carMed, end="")
 
     def sup_print(self):
-        print(self.carSup, end=None)
+        print(self.carSup, end="")
 
     def inf_print(self):
-        print(self.carInf, end=None)
+        print(self.carInf, end="")
 
-    def car_print(self, esp):
-        self.espacio_print(esp)
+    # metodo para imprimir el carro y una pista basica sin adornos. Solo para pruebas
+    # imprime el carro en la posicion guardada en self.posicion
+    def car_print(self):
+
+        self.espacio_print()
         self.sup_print()
-        self.espacio_print(esp)
+        self.siguiente_seccion()
+
+        self.espacio_print()
         self.med_print()
-        self.espacio_print(esp)
+        self.siguiente_seccion()
+
+        self.espacio_print()
         self.inf_print()
+        self.siguiente_seccion()
