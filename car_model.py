@@ -1,3 +1,6 @@
+# en esta clase definimos el modelo basico de un carro
+
+
 class car_model:
     # caracteres utiles para la construccion del carro
     triRell =           "\u25E3"
@@ -30,9 +33,11 @@ class car_model:
     def set_pos(self, pos):
         self.posicion = pos
 
+    #obtener la posicion del carro
     def get_pos(self):
         return self.posicion
 
+    # obtener el tamano del carro (programador perezoso y con poca memoria en el cerebro!)
     def get_size(self):
         return self.size
 
@@ -41,11 +46,13 @@ class car_model:
         for i in range(self.posicion):
             print(" ", end="")
 
-    def siguiente_seccion(self):
+    @staticmethod
+    def siguiente_seccion():
         print()
 
 
-    #impresiones de las partes superior, media e inferior del carro. las imprime la pista o el propio carro para pruebas
+    #impresiones de las partes superior, media e inferior del carro. las imprime la pista
+    # o el propio carro para pruebas
     def med_print(self):
         print(self.carMed, end="")
 
@@ -58,7 +65,6 @@ class car_model:
     # metodo para imprimir el carro y una pista basica sin adornos. Solo para pruebas
     # imprime el carro en la posicion guardada en self.posicion
     def car_print(self):
-
         self.espacio_print()
         self.sup_print()
         self.siguiente_seccion()

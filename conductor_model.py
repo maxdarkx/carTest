@@ -1,3 +1,5 @@
+#modelo basico de un conductor
+
 from car_model import car_model
 
 # la clase conductor solo cuenta con un id y un carro correspondiente, y sera agregada a un jugador

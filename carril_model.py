@@ -4,12 +4,13 @@ import os
 
 # esta clase se encarga de imprimir un carril con su respectiva senalizacion, y un carro asignado
 # a un conductor
-class carril_model:
 
-    def __init__(self,id,size):
+
+class carril_model:
+    def __init__(self, id, size=150):
         self.id = id
         self.cond = conductor_model(self.id)
-        self.size = size      #el tamano maximo de un carril es 100em, cada em son 10 metros
+        self.size = size      #el tamano maximo de un carril es 150em, cada em son 10 metros
         self.pos = 0
         self.edge = "\u254D"
 
@@ -19,11 +20,14 @@ class carril_model:
             print(" ", end="")
 
     # imprimir un retorno de carro para mostrar la siguiente seccion del carril y del carro
-    def siguiente_linea_print(self):
+
+    @staticmethod
+    def siguiente_linea_print():
         print()
 
     # borrar la pantalla
-    def clear_screen(self):
+    @staticmethod
+    def clear_screen():
         os.system('clear')
 
     # cambiar la posicion en la que se encuentra el carro
@@ -84,9 +88,9 @@ class carril_model:
         self.print_inf_carro()
         self.print_linea_lateral_carril()
 
-
     # hacer una animacion de carril, el carro se movera desde su posicion actual hasta pos
     # solo para imprimir un carril, solo usado en pruebas
+
     def mover_clear(self, pos):
         for i in range(self.pos, pos + 1):
             self.set_posicion(i)
