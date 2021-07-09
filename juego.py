@@ -155,6 +155,7 @@ class juego:
         print(clasificacion)
         self.clasificacion = clasificacion
         self.imprimir_archivo()
+        self.buscar_historico()
 
 
     def ganar(self):
@@ -184,6 +185,18 @@ class juego:
             f.write(i + "\n")
         f.write("\n")
         f.close()
+
+
+    def buscar_historico(self):
+        f = open("Historico-podios.txt", 'r')
+        j = 0
+        for i in self.clasificacion:
+            for line in f:
+                if line.find(i[4:]) > 0:
+                    j += 1
+            print("el jugador", i[4:], "ha estado en el podio ", j, "veces")
+        f.close()
+
 
 
 
