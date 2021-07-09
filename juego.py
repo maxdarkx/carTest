@@ -1,12 +1,15 @@
 from pista_model import pista_model
 from os import system
 from time import sleep
+from datetime import datetime
+
 
 # Desde esta clase se controla el juego en su totalidad
 class juego:
     def __init__(self):
         self.p1 = pista_model()
         self.pista_podio = 1
+        self.clasificacion = []
 
     # funcion para imprimir el menu principal, incluye correccion de errores anti usuario
     def menu(self):
@@ -148,8 +151,11 @@ class juego:
         for i in range(1,4):
             for j in self.p1.jugador:
                 if j.podio == i:
-                    clasificacion.append("("+str(j.podio) + ") " + str(j.get_id())+". "+j.get_name())
+                    clasificacion.append("("+str(j.podio) + ") "+j.get_name())
         print(clasificacion)
+        self.clasificacion = clasificacion
+        self.imprimir_archivo()
+
 
     def ganar(self):
         for i in self.p1.jugador:
@@ -164,11 +170,20 @@ class juego:
         for i in self.p1.jugador:
             if i.termino:
                 k += 1
-        print("acabaron", k)
+        #print("acabaron", k)
         if k >= 5:
             return True
         else:
             return False
+
+    def imprimir_archivo(self):
+        f=open("Historico-podios.txt", 'a')
+        hora = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        f.write(hora+"\n")
+        for i in self.clasificacion:
+            f.write(i + "\n")
+        f.write("\n")
+        f.close()
 
 
 
